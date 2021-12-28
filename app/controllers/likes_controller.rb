@@ -6,11 +6,27 @@ class LikesController < ApplicationController
       render json: {
         id:       like.id,
         email:    current_user.email,
-        message:  "成功しました"
+        message:  "いいねしました"
       }, status: 200
     else
       render json: {
         message:  "いいねできませんでした",
+        errors:   like.errors.messages
+      }, status: 400
+    end
+  end
+
+  def destroy
+    like = Like.find(params[:id])
+    if like.delete
+      render json: {
+        id:       like.id,
+        email:    like.user.email,
+        message:  "削除しました"
+      }, status: 200
+    else
+      render json: {
+        message:  "削除できませんでした",
         errors:   like.errors.messages
       }, status: 400
     end
