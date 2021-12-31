@@ -11,12 +11,13 @@ class RoomChannel < ApplicationCable::Channel
 
   # データ受信時
   def receive(data)
-    user = User.find_by(email: data[:email])
+    # Vueからdataを受け取るため、data[:email]ではなく、data['email']となる
+    user = User.find_by(email: data['email'])
     
-    if message = Message.create(content: data[:message], user_id: user.id)
+    if message = Message.create(content: data['message'], user_id: user.id)
       # ActionCable~: チャネルに接続するすべてのブラウザにデータを送信
       ActionCable.server.broadcast "room_channel", {
-        message:    data[:message],
+        message:    data['message'],
         name:       user.name,
         created_at: message.created_at
       }
