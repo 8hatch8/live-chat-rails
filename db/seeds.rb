@@ -6,4 +6,4 @@
   puts "#{number + 1}番目のメッセージを作成しました"
 end
 
-puts "Created messages!
+puts "Created messages!"

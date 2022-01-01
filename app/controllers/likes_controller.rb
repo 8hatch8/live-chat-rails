@@ -7,12 +7,12 @@ class LikesController < ApplicationController
         id:       like.id,
         email:    current_user.email,
         message:  "いいねしました"
-      }, status: 200
+      }, status: :ok
     else
       render json: {
         message:  "いいねできませんでした",
         errors:   like.errors.messages
-      }, status: 400
+      }, status: :bad_request
     end
   end
 
@@ -23,12 +23,12 @@ class LikesController < ApplicationController
         id:       like.id,
         email:    like.user.email,
         message:  "削除しました"
-      }, status: 200
+      }, status: :ok
     else
       render json: {
         message:  "削除できませんでした",
         errors:   like.errors.messages
-      }, status: 400
+      }, status: :bad_request
     end
   end
 
